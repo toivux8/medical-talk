@@ -28,7 +28,7 @@ const CompanyHeader = () => (
     </div>
 )
 
-const ChannelListContainer = () => {
+const ChannelListContainer = ({ isCreating, setIsEditing, setIsCreating, setCreateType }) => {
     const logout = () => {
         cookies.remove("token");
         cookies.remove( 'userName');
@@ -53,6 +53,10 @@ const ChannelListContainer = () => {
                         <TeamChannelList 
                             {... listProps}
                             type="team"
+                            isCreating = { isCreating }
+                            setIsCreating = { setIsCreating }
+                            setCreateType = { setCreateType }
+                            setIsEditing = { setIsEditing }
                         />
                     )}
                     Preview={(previewProps) => (
@@ -69,6 +73,10 @@ const ChannelListContainer = () => {
                         <TeamChannelList 
                             {... listProps}
                             type="messaging"
+                            isCreating = { isCreating }
+                            setIsCreating = { setIsCreating }
+                            setCreateType = { setCreateType }
+                            setIsEditing = { setIsEditing }
                         />
                     )}
                     Preview={(previewProps) => (
