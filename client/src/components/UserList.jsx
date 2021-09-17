@@ -4,25 +4,37 @@ import { Avatar, useChatContext } from 'stream-chat-react'
 import { InviteIcon } from '../assets'
 
 const ListContainer = ({ children }) => {
-    <div className="user-item__container">
-        <div className="user-item__name-header">
-            <p>User</p>
-            <p>Invite</p>
+    return (
+        <div className="user-list__container">
+            <div className="user-list__header">
+                <p>User</p>
+                <p>Invite</p>
+            </div>
+            { children }
         </div>
-        { children }
-    </div>
+    )
 }
 
-const UserItem = () => {
-    <div className="user-item__wrapper">
-        <div className="user-item__name-wrapper">
-            <Avatar />
+const UserItem = ({ user }) => {
+    const [selected, setSelected] = useState(false);
+
+    const handleSelected = () => {
+        setSelected((prevSelected) => !prevSelected);
+    }
+
+    return (
+        <div className="user-item__wrapper" onClick={handleSelected}>
+            <div className="user-item__name-wrapper">
+                <Avatar image={user.image} name={user.fullName || user.id } size={32} />
+                <p className="user-item__name">{user.fullName || user.id }</p>
+            </div>
+            { selected? <InviteIcon /> : <div className="user-item__invite-empty" /> }
         </div>
-    </div>
+    )
 }
 
 const UserList = () => {
-    const [selected, setSelected] = useState(false);
+    // const [selected, setSelected] = useState(false);
 
     const { client } = useChatContext();
     const [users, setUsers] = useState([]);
@@ -35,14 +47,14 @@ const UserList = () => {
             setLoading(true);
 
             try {
-                const respond = await client.queryUsers(
+                const response = await client.queryUsers(
                     { id: { $ne: client.userID }},
                     { id :1 },
                     { limit: 8 }
                 )
 
-                if(users.length) {
-                    setUsers(respond.users)
+                if(response.users.length) {
+                    setUsers(response.users)
                 } else {
                     setListEmpty(true);
                 }
