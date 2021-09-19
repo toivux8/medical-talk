@@ -20,9 +20,9 @@ const UserItem = ({ user, setSelectedUsers }) => {
 
     const handleSelected = () => {
         if(selected) {
-            setSelectedUsers((prevUsers) => prevUsers.filter((prevUsers) => prevUsers !== user.id))
+            setSelectedUsers((prevUsers) => prevUsers.filter((prevUser) => prevUser !== user.id))
         } else {
-            setSelectedUsers((prevUsers) => [ ... prevUsers, user.id])
+            setSelectedUsers((prevUsers) => [ ...prevUsers, user.id])
         }
 
         setSelected((prevSelected) => !prevSelected);
@@ -40,7 +40,6 @@ const UserItem = ({ user, setSelectedUsers }) => {
 }
 
 const UserList = ({ setSelectedUsers }) => {
-    // const [selected, setSelected] = useState(false);
 
     const { client } = useChatContext();
     const [users, setUsers] = useState([]);
